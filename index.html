@@ -19,8 +19,10 @@
   }
 
   .county{
-    fill: #cccccc;
-    stroke: 333333;
+    fill: #e3e3e3;
+    stroke: #333;
+    stroke-width: 0.5;
+    cursor: pointer;
 
   }
 
@@ -58,7 +60,7 @@
     var svg = d3.select("body").append("svg")
       .attr("width", width )
       .attr("height", height)
-      .append("g"); // add a 'g' children tag
+      .append("g") // add a 'g' children tag
 
 
     var projection = d3.geoAlbersUsa()
@@ -69,9 +71,27 @@
     var path = d3.geoPath()
     .projection(projection);
 
+    var zoomSettings = {
+      zoomLevel: 5,
+      duration: 1000,
+      ease: d3.easeCubicOut
+
+    }
+
+    // g.transition()
+    //   .duration(zoomSettings.duration)
+    //   .ease(zoomSettings.ease)
+    //   .attr('transform', 'translate(' + width/2 + ',' + height/2 + ') scale(' + zoomLevel + ')translate(' + -x + ',' + -y + ')');
+
+
     d3.json("US.json", function(error, US) {
       if (error) return console.error(error);
         d3.csv("players_2013-12-12.csv",function(error, players){
+          var x;
+          var y;
+          var zoomLevel;
+          var centered;
+
           var counties = topojson.feature(US,US.objects.counties).features; //returns counties array
           console.log(counties);
           console.log(players);
@@ -88,6 +108,30 @@
           })
           .on("mouseout", function(d){
             d3.select(this).classed("selected",false)
+          })
+          .on("click", function(d){
+
+              if(d && centered !== d){
+
+                var centroid = path.centroid(d);
+
+                x = centroid[0];
+                y = centroid[1];
+                zoomLevel = zoomSettings.zoomLevel;
+                centered = d;
+              } else{
+                
+                x = width/2;
+                y = width/2;
+                zoomLevel = 1;
+                centered = null;
+              }
+
+              svg.transition()
+                .duration(zoomSettings.duration)
+                .ease(zoomSettings.ease)
+                .attr('transform', 'translate(' + width/2 + ',' + height/2 + ') scale(' + zoomLevel + ')translate(' + -x + ',' + -y + ')');
+               //onClick
           })
 
         })
