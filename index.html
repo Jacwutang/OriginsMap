@@ -8,9 +8,24 @@
   <script src="US.json"></script>
 
 
+
   <style>
   svg{
     /*background: red;*/
+    text-align: center;
+  }
+
+  .county{
+    fill: #cccccc;
+    stroke: 333333;
+
+  }
+
+
+
+
+  .selected{
+    fill: yellow;
   }
 
   </style>
@@ -22,8 +37,8 @@
 
   <script>
 		// Our D3 code will go here.
-    var width = 960
-    var height = 1160;
+    var width = 500
+    var height = 750;
 
     var svg = d3.select("body").append("svg")
       .attr("width", width)
@@ -31,33 +46,35 @@
       .append("g"); // add a 'g' children tag
 
     var projection = d3.geoMercator()
-    .translate([width/2, height/2]);
+    .translate([width/2, height/2])
+    .scale(200);
 
     var path = d3.geoPath()
     .projection(projection);
 
     d3.json("US.json", function(error, US) {
       if (error) return console.error(error);
-      // console.log(US.objects.USstates);
-      // svg.append("path")
-      // .datum(topojson.feature(US, US.objects.states))
-      // .attr("d", d3.geo.path().projection(d3.geo.mercator()));
-      var counties = topojson.feature(US,US.objects.counties).features; //returns counties array
-      console.log(counties);
+        d3.csv("players_2013-12-12.csv",function(error, players){
+          var counties = topojson.feature(US,US.objects.counties).features; //returns counties array
+          console.log(counties);
+          console.log(players);
 
-      svg.selectAll(".county")
-      .data(counties)
-      .enter() // for each
-      .append("path") // each item gets "path"
-      .attr("class", "county")
-      //Make a projection first
-      .attr("d",path);
+          svg.selectAll(".county")
+          .data(counties)
+          .enter() // for each
+          .append("path") // each item gets "path"
+          .attr("class", "county")
+          //Make a projection first
+          .attr("d",path)
+          .on("mouseover", function(d){
+            d3.select(this).classed("selected",true)
+          })
+          .on("mouseout", function(d){
+            d3.select(this).classed("selected",false)
+          })
 
-    });
-
-
-
-
+        })
+    })
 
     </script>
 </body>
