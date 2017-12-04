@@ -39,6 +39,10 @@
     fill: yellow;
   }
 
+  .selectedZoom{
+    fill:yellow;
+  }
+
   </style>
 
 </head>
@@ -72,7 +76,7 @@
     .projection(projection);
 
     var zoomSettings = {
-      zoomLevel: 5,
+      zoomLevel: 3,
       duration: 1000,
       ease: d3.easeCubicOut
 
@@ -91,6 +95,7 @@
           var y;
           var zoomLevel;
           var centered;
+          var oldNode;
 
           var counties = topojson.feature(US,US.objects.counties).features; //returns counties array
           console.log(counties);
@@ -110,6 +115,7 @@
             d3.select(this).classed("selected",false)
           })
           .on("click", function(d){
+              // alert("Return to original view? Click on a different county");
 
               if(d && centered !== d){
 
@@ -119,12 +125,26 @@
                 y = centroid[1];
                 zoomLevel = zoomSettings.zoomLevel;
                 centered = d;
-              } else{
-                
+                // currentNode = d;
+                if(oldNode === null){
+                  oldNode = this;
+                }
+
+                d3.select(this).classed("selectedZoom",true);
+
+                if(this !== oldNode){
+                  d3.select(oldNode).classed("selectedZoom",false);
+                  oldNode = this;
+                }
+              }
+
+              else{
+
                 x = width/2;
                 y = width/2;
                 zoomLevel = 1;
                 centered = null;
+
               }
 
               svg.transition()
