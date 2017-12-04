@@ -13,6 +13,9 @@
   svg{
     /*background: red;*/
     text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+
   }
 
   .county{
@@ -37,8 +40,8 @@
 
   <script>
 		// Our D3 code will go here.
-    var width = 500
-    var height = 750;
+    var width = 1500;
+    var height = 850;
 
     var svg = d3.select("body").append("svg")
       .attr("width", width)
@@ -47,7 +50,7 @@
 
     var projection = d3.geoMercator()
     .translate([width/2, height/2])
-    .scale(200);
+    .scale(250);
 
     var path = d3.geoPath()
     .projection(projection);
