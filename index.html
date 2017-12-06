@@ -69,6 +69,13 @@
     var width = 850;
     var height = 750;
 
+    var tooltip = d3.select("body")
+	   .append("div")
+	    .style("position", "absolute")
+	     .style("z-index", "10")
+	      .style("visibility", "hidden")
+	       .text("a simple tooltip");
+
     var svg = d3.select("body").append("svg")
       .attr("width", width )
       .attr("height", height)
@@ -219,8 +226,14 @@
             // return coords[1];
           })
           .on("mouseover", function(player){
-            console.log(player.name);
+            return tooltip.style("visibility", "visible").text(player.name)
           })
+	         .on("mousemove", function(player){
+             return tooltip.style("top", (event.pageY-10)+"px").style("left",(event.pageX+10)+"px");
+           })
+	          .on("mouseout", function(player){
+              return tooltip.style("visibility", "hidden");
+            })
           //.text(function(player) { return player.name; })
 
 
