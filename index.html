@@ -226,7 +226,7 @@
             // return coords[1];
           })
           .on("mouseover", function(player){
-            return tooltip.style("visibility", "visible").style("background", "white").text(player.name)
+            return tooltip.style("visibility", "visible").style("background", "white").text(player.name).append("text").text(player.college)
           })
 	         .on("mousemove", function(player){
              return tooltip.style("top", (event.pageY-10)+"px").style("left",(event.pageX+10)+"px");
