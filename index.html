@@ -15,6 +15,7 @@
     /*text-align: center;
     margin-left: auto;
     margin-right: auto;*/
+    margin-top: 0;
 
   }
 
@@ -53,7 +54,7 @@
 </head>
 <body>
 	<!-- Page elements and content go here. -->
-  <h1> Hello Worldsss </h1>
+  <h1> BirthPlace of NFL Players from the 1960s to 2014 </h1>
 
   <script>
 		// Our D3 code will go here.
@@ -64,7 +65,7 @@
 
 
     var width = 850;
-    var height = 900;
+    var height = 500;
 
     var svg = d3.select("body").append("svg")
       .attr("width", width )
@@ -182,7 +183,7 @@
           .data(players)
           .enter()
           .append("circle")
-          .attr("r",5)
+          .attr("r",2)
           .attr("cx", function(player){
 
             // console.log(player.name, player.Longitude,player.Latitude);
