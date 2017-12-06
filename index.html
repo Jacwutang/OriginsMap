@@ -32,6 +32,11 @@
     margin-right: auto;
   }
 
+  .circle{
+    color: red;
+    fill: red;
+  }
+
 
 
 
@@ -92,7 +97,7 @@
 
     d3.json("US.json", function(error, US) {
       if (error) return console.error(error);
-        d3.csv("test.csv",function(error, cities ){
+        d3.csv("players_2013_geocodio.csv",function(error, players ){
           var x;
           var y;
           var zoomLevel;
@@ -100,11 +105,11 @@
           var oldNode;
 
           var counties = topojson.feature(US,US.objects.counties).features; //returns counties array
-          console.log(counties);
-          console.log(cities);
+          // console.log(counties);
+          // console.log(players);
 
           // svg.selectAll(".city-circle")
-          // .data(cities)
+          // .data(players)
           // .enter()
           // .append("circle")
           // .attr("r",2)
@@ -112,7 +117,7 @@
           // .attr("cy",10)
 
           // svg.select(".city-circle")
-          // .data(cities)
+          // .data(players)
           // .enter()
           // .append("circle")
           // .attr("r",2)
@@ -173,27 +178,96 @@
                 .attr('transform', 'translate(' + width/2 + ',' + height/2 + ') scale(' + zoomLevel + ')translate(' + -x + ',' + -y + ')');
                //onClick
           })
-
           svg.selectAll(".city-circle")
-          .data(cities)
+          .data(players)
           .enter()
           .append("circle")
-          .attr("r",2)
-          .attr("cx", function(){
-              var coords = projection([-110,40]);
-              debugger;
-              return coords[0];
+          .attr("r",5)
+          .attr("cx", function(player){
+
+            // console.log(player.name, player.Longitude,player.Latitude);
+            //  console.log(player.Longitude);
+            //  console.log(player.Latitude);
+              var coords = projection([player.Longitude,player.Latitude]);
+              //-98.614928
+              //27.899181
+              if(coords === undefined || coords === null){
+                return 0;
+              } else{
+                return coords[0];
+              }
+
           })
-          .attr("cy", function(){
-            var coords = projection([40.21604,-76.924996]);
-            return coords[1];
+          .attr("cy", function(player){
+
+            // console.log("HERE");
+            // console.log(player.name, "HERE");
+            // console.log(player.Longitude);
+            // console.log(player.Latitude);
+            var coords = projection([player.Longitude,player.Latitude]);
+
+            if(coords === undefined || coords === null){
+              return 0;
+            } else{
+              return coords[1];
+            }
+
+            // return coords[1];
           })
+
+          // svg.selectAll(".city-circle")
+          // .data(players)
+          // .enter()
+          // .append("circle")
+          // .attr("r",2)
+          // .attr("cx", function(player){
+          //
+          //   //console.log(player.name);
+          //   // console.log(player.Longitude);
+          //   // console.log(player.Latitude);
+          //     var coords = projection([player.Longitude, player.Latitude]);
+          //     //-98.614928
+          //     //27.899181
+          //     return coords[0];
+          // })
+          // .attr("cy", function(player){
+          //   console.log("HERE");
+          //   console.log(player.name);
+          //   console.log(player.Longitude);
+          //   console.log(player.Latitude);
+          //   var coords = projection([player.Longitude,player.Latitude]);
+          //   return coords[1];
+          // })
 
 
 
 
         })
     })
+
+    // svg.selectAll(".city-circle")
+    // .data(players)
+    // .enter()
+    // .append("circle")
+    // .attr("r",2)
+    // .attr("cx", function(player){
+    //
+    //   console.log(player.name);
+    //   console.log(player.Longitude);
+    //   console.log(player.Latitude);
+    //     var coords = projection([-98.614928,27.899181]);
+    //     //-98.614928
+    //     //27.899181
+    //     return coords[0];
+    // })
+    // .attr("cy", function(player){
+    //   console.log("HERE");
+    //   console.log(player.name);
+    //   console.log(player.Longitude);
+    //   console.log(player.Latitude);
+    //   var coords = projection([-98.614928,27.899181]);
+    //   return coords[1];
+    // })
 
     </script>
 </body>
