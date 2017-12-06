@@ -226,7 +226,7 @@
             // return coords[1];
           })
           .on("mouseover", function(player){
-            return tooltip.style("visibility", "visible").text(player.name)
+            return tooltip.style("visibility", "visible").style("background", "white").attr("dy","0em").text("hello").append("text").attr("dy","5em").text(player.name)
           })
 	         .on("mousemove", function(player){
              return tooltip.style("top", (event.pageY-10)+"px").style("left",(event.pageX+10)+"px");
