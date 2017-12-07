@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 
-  <title>Mapping with D3</title>
+  <title>Origins Map</title>
 	<script src="http://d3js.org/d3.v4.min.js" charset="utf-8"></script>
   <script src="http://d3js.org/topojson.v1.min.js"></script>
   <script src="US.json"></script>
@@ -31,6 +31,13 @@
     text-align: center;
     margin-left: auto;
     margin-right: auto;
+  }
+
+  div{
+    border: 1px solid black;
+    width: 50%;
+    height: 100px;
+    margin: 0 auto;
   }
 
   .city-circle{
@@ -126,7 +133,7 @@
 	    .style("position", "absolute")
 	     .style("z-index", "10")
 	      .style("visibility", "hidden")
-	       .text("a simple tooltip");
+	       .text("");
 
     var svg = d3.select("body").append("svg")
       .attr("width", width )
@@ -143,18 +150,12 @@
     .projection(projection);
 
     var zoomSettings = {
-      zoomLevel: 10,
+      zoomLevel: 50,
       duration: 500,
       ease: d3.easeCubicOut
 
     }
 
-
-
-    // g.transition()
-    //   .duration(zoomSettings.duration)
-    //   .ease(zoomSettings.ease)
-    //   .attr('transform', 'translate(' + width/2 + ',' + height/2 + ') scale(' + zoomLevel + ')translate(' + -x + ',' + -y + ')');
 
 
     d3.json("US.json", function(error, US) {
@@ -327,6 +328,10 @@
     // })
 
     </script>
+
+    <div> Hello World
+
+    </div>
 </body>
 </html>
 
