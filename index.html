@@ -16,6 +16,9 @@
     margin-left: auto;
     margin-right: auto;*/
     margin-top: 0;
+    background-color: gray;
+    width: 100%;
+
 
   }
 
@@ -33,11 +36,12 @@
     margin-right: auto;
   }
 
-  div{
-    border: 1px solid black;
-    width: 50%;
-    height: 100px;
+  .intro{
+
+    width: 100%;
+    height: 200px;
     margin: 0 auto;
+    background-color: white;
   }
 
   .city-circle{
@@ -63,14 +67,14 @@
 </head>
 <body>
 	<!-- Page elements and content go here. -->
-  <h1> BirthPlace of 23,000+ NFL Players from the 1960s to 2014 </h1>
-  <h3>
-  <script>
-		// Our D3 code will go here.
+  <div class="intro">
+    <h1> Explore Hotspots of Football Talent </h1>
+    <h2> Using NFL dataset of over 23,000 former and active football players from the 1960s until now.</h2>
+    <h3> Where is the next generation of talent going to come from? </h3>
+  </div>
 
-    // var margin = {top: 0, left: 0, right: 0, bottom: 0},
-    // height = 400 - margin.top - margin.bottom,
-    // width = 800 - margin.left - margin.right;
+  <script>
+
     STATES = {
       "01": "Alabama",
       "02": "Alaska",
@@ -125,8 +129,8 @@
       "56": "Wyoming"
       }
 
-    var width = 850;
-    var height = 750;
+    var width = 1500;
+    var height = 1000;
 
     var tooltip = d3.select("body")
 	   .append("div")
@@ -285,7 +289,7 @@
             // return coords[1];
           })
           .on("mouseover", function(player){
-            return tooltip.style("visibility", "visible").style("background", "white").text(player.name + " " + player.birth_date + " " + player.college)
+            return tooltip.style("visibility", "visible").style("background", "white").text(player.name + " " + player.birth_date + " " + " " + " " + player.college)
           })
 	         .on("mousemove", function(player){
              return tooltip.style("top", (event.pageY-10)+"px").style("left",(event.pageX+10)+"px");
@@ -329,9 +333,7 @@
 
     </script>
 
-    <div> Hello World
 
-    </div>
 </body>
 </html>
 
