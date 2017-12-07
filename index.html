@@ -174,17 +174,35 @@
     .projection(projection);
 
     var zoomSettings = {
-      zoomLevel: 25,
+      zoomLevel: 20,
       duration: 500,
       ease: d3.easeCubicOut
 
     }
+
+    const filterData = (data) => {
+      var res = [];
+
+      data.forEach( (d) => {
+        d.birth_date = parseInt("19" + d.birth_date.slice(-2) )
+        res.push(d);
+
+      })
+
+      return res;
+
+
+
+
+    };
 
 
 
     d3.json("US.json", function(error, US) {
       if (error) return console.error(error);
         d3.csv("players_2013_geocodio.csv",function(error, players ){
+          var player_dob = filterData(players);
+          console.log(player_dob);
           var x;
           var y;
           var zoomLevel;
@@ -272,7 +290,9 @@
                //onClick
           })
           svg.selectAll(".city-circle")
-          .data(players)
+          .data(players.filter(function(player){
+            return player.birth_date > 1985;
+          }))
           .enter()
           .append("circle")
           .attr("class","city-circle")
