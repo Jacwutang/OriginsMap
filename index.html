@@ -64,7 +64,59 @@
     // var margin = {top: 0, left: 0, right: 0, bottom: 0},
     // height = 400 - margin.top - margin.bottom,
     // width = 800 - margin.left - margin.right;
-
+    STATES = {
+      "01": "Alabama",
+      "02": "Alaska",
+      "04": "Arizona",
+      "05": "Arkansas",
+      "06": "California",
+      "08": "Colorado",
+      "09": "Connecticut",
+      "10": "Delaware",
+      "11": "District of Columbia",
+      "12": "Florida",
+      "13": "Geogia",
+      "15": "Hawaii",
+      "16": "Idaho",
+      "17": "Illinois",
+      "18": "Indiana",
+      "19": "Iowa",
+      "20": "Kansas",
+      "21": "Kentucky",
+      "22": "Louisiana",
+      "23": "Maine",
+      "24": "Maryland",
+      "25": "Massachusetts",
+      "26": "Michigan",
+      "27": "Minnesota",
+      "28": "Mississippi",
+      "29": "Missouri",
+      "30": "Montana",
+      "31": "Nebraska",
+      "32": "Nevada",
+      "33": "New Hampshire",
+      "34": "New Jersey",
+      "35": "New Mexico",
+      "36": "New York",
+      "37": "North Carolina",
+      "38": "North Dakota",
+      "39": "Ohio",
+      "40": "Oklahoma",
+      "41": "Oregon",
+      "42": "Pennsylvania",
+      "44": "Rhode Island",
+      "45": "South Carolina",
+      "46": "South Dakota",
+      "47": "Tennessee",
+      "48": "Texas",
+      "49": "Utah",
+      "50": "Vermont",
+      "51": "Virginia",
+      "53": "Washington",
+      "54": "West Virginia",
+      "55": "Wisconsin",
+      "56": "Wyoming"
+      }
 
     var width = 850;
     var height = 750;
@@ -91,8 +143,8 @@
     .projection(projection);
 
     var zoomSettings = {
-      zoomLevel: 3,
-      duration: 1000,
+      zoomLevel: 10,
+      duration: 500,
       ease: d3.easeCubicOut
 
     }
@@ -143,6 +195,12 @@
           .attr("d",path)
           .on("mouseover", function(d){
             d3.select(this).classed("selected",true)
+            // console.log(d.properties.NAME);
+            tooltip.style("visibility", "visible").style("background", "white").text("State: " + STATES[d.properties.STATEFP] + " " +  "County: "+ d.properties.NAME)
+
+          })
+          .on("mousemove", function(d){
+            return tooltip.style("top", (event.pageY-10)+"px").style("left",(event.pageX+10)+"px");
           })
           .on("mouseout", function(d){
             d3.select(this).classed("selected",false)
@@ -193,7 +251,7 @@
           .enter()
           .append("circle")
           .attr("class","city-circle")
-          .attr("r",2)
+          .attr("r",.9)
           .attr("cx", function(player){
 
             // console.log(player.name, player.Longitude,player.Latitude);
