@@ -11,10 +11,7 @@
 
   <style>
   svg{
-    /*background: red;*/
-    /*text-align: center;
-    margin-left: auto;
-    margin-right: auto;*/
+
     margin-top: 0;
     background-color: gray;
     width: 100%;
@@ -46,6 +43,10 @@
 
   }
 
+  .slidep{
+    margin-left: 230%;
+  }
+
   .intro{
 
     width: 100%;
@@ -57,6 +58,11 @@
   .city-circle{
     color:green;
     fill: green;
+  }
+
+  .city-circle-dark{
+    color:red;
+    fill: red;
   }
 
   .instructions{
@@ -78,7 +84,10 @@
   }
 
   #slidecontainer {
-    width: 50%;
+    width: 25%;
+    margin: 0 auto;
+    position: absolute;
+
   }
 
   .slider {
@@ -90,6 +99,8 @@
     opacity: 0.7;
     -webkit-transition: .2s;
     transition: opacity .2s;
+    margin-left: 200%;
+    margin-top: 40%;
 }
 
 .slider:hover {
@@ -123,7 +134,7 @@
 
   <div id="slidecontainer">
   <input type="range" min="1900" max="1990" value="1900" class="slider" id="myRange">
-  <p>Birth Year: <span id="demo"></span></p>
+  <p class="slidep">Birth Year: <span id="demo"></span></p>
 </div>
 
 
