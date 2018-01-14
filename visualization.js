@@ -92,12 +92,10 @@ var centered;
 
 function ready(error,data, file_states, players){
 
-
-
   var counties = topojson.feature(data,data.objects.counties).features;
 
   var states = topojson.feature(file_states, file_states.objects.states).features;
-  console.log(counties);
+  // console.log(counties);
 
 
  g.append('g')
@@ -106,17 +104,12 @@ function ready(error,data, file_states, players){
   .enter().append("path")
   .attr("class", "county")
   .attr("d", path)
-  // .append("text")
-  // .text(function(d){
-  //   return d.name;
-  // })
   .on('mouseover', function(d){
     d3.select(this).classed("selected", true);
     tooltip.style("visibility", "visible");
 
   })
   .on('mousemove', function(d){
-
     tooltip.style("top",
     (d3.event.pageY-10)+"px").style("left",(d3.event.pageX+10)+"px").text(d.properties.NAME + ' ' + mapCountyToState(d.properties.STATEFP));
   })
@@ -125,10 +118,7 @@ function ready(error,data, file_states, players){
       tooltip.style("visibility", "hidden");
 
   })
-
   .on('click',clicked);
-
-
 
 
   g.selectAll(".state")
@@ -176,8 +166,21 @@ function ready(error,data, file_states, players){
        }
      })
      .attr("opacity", 0.5)
-}
+     .on('mouseover', function(c){
+        tooltip.style("visibility", "visible");
+      })
+     .on('mousemove', function(c){
+       console.log(c);
+       tooltip.style("top",
+       (d3.event.pageY-10)+"px").style("left",(d3.event.pageX+10)+"px").text(c.name);
+     })
+     .on('mouseout', function(c){
 
+         tooltip.style("visibility", "hidden");
+
+     })
+}
+// ------------------------------------------------------------------
 function clicked(d) {
 
   console.log(clicked);
@@ -187,7 +190,7 @@ function clicked(d) {
     var centroid = path.centroid(d);
     x = centroid[0];
     y = centroid[1];
-    k = 4;
+    k = 10;
     centered = d;
   } else {
     x = width / 2;
