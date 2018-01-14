@@ -10,6 +10,7 @@ var svg = d3.select("#map")
 
 d3.queue()
   .defer(d3.json,"US.json")
+  .defer(d3.json,"USstates.json")
   .defer(d3.csv, "players_2013_geocodio.csv")
   .await(ready)
 
@@ -23,11 +24,14 @@ var path = d3.geoPath()
 
 //Convert from TopoJSON into something
 
-function ready(error,data, players){
-  console.log(data);
-  console.log(players);
+function ready(error,data, file_states, players){
+  // console.log(data);
+
 
   var counties = topojson.feature(data,data.objects.counties).features;
+  console.log(counties);
+  var states = topojson.feature(file_states, file_states.objects.states).features;
+  console.log(states);
 
   svg.selectAll(".county")
   .data(counties)
@@ -41,12 +45,17 @@ function ready(error,data, players){
     d3.select(this).classed("selected", false)
   })
 
+  svg.selectAll(".state")
+  .data(states)
+  .enter().append("path")
+  .attr("class","state")
+  .attr("d",path)
 
 
   svg.selectAll(".city-circle")
      .data(players)
      .enter().append("circle")
-     .attr("r",2)
+     .attr("r",1)
      .attr("cx",function(player){
        var coords = projection([player.Longitude, player.Latitude]);
 
