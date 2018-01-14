@@ -40,10 +40,14 @@ function ready(error,data, file_states, players){
   .attr("d", path)
   .on('mouseover', function(d){
     d3.select(this).classed("selected", true)
+    
   })
   .on('mouseout', function(d){
     d3.select(this).classed("selected", false)
+
   })
+
+
 
   svg.selectAll(".state")
   .data(states)
