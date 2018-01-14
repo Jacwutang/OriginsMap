@@ -1,3 +1,56 @@
+var state_Hash = {
+   "01": "Alabama",
+   "02": "Alaska",
+   "04": "Arizona",
+   "05": "Arkansas",
+   "06": "California",
+   "08": "Colorado",
+   "09": "Connecticut",
+   "10": "Delaware",
+   "11": "District of Columbia",
+   "12": "Florida",
+   "13": "Geogia",
+   "15": "Hawaii",
+   "16": "Idaho",
+   "17": "Illinois",
+   "18": "Indiana",
+   "19": "Iowa",
+   "20": "Kansas",
+   "21": "Kentucky",
+   "22": "Louisiana",
+   "23": "Maine",
+   "24": "Maryland",
+   "25": "Massachusetts",
+   "26": "Michigan",
+   "27": "Minnesota",
+   "28": "Mississippi",
+   "29": "Missouri",
+   "30": "Montana",
+   "31": "Nebraska",
+   "32": "Nevada",
+   "33": "New Hampshire",
+   "34": "New Jersey",
+   "35": "New Mexico",
+   "36": "New York",
+   "37": "North Carolina",
+   "38": "North Dakota",
+   "39": "Ohio",
+   "40": "Oklahoma",
+   "41": "Oregon",
+   "42": "Pennsylvania",
+   "44": "Rhode Island",
+   "45": "South Carolina",
+   "46": "South Dakota",
+   "47": "Tennessee",
+   "48": "Texas",
+   "49": "Utah",
+   "50": "Vermont",
+   "51": "Virginia",
+   "53": "Washington",
+   "54": "West Virginia",
+   "55": "Wisconsin",
+   "56": "Wyoming"
+}
 
 var width = 1000;
 var height = 750;
@@ -9,9 +62,12 @@ var svg = d3.select("#map")
           .attr("transform", "translate(30,30)")
 
 var g = svg.append("g")
-//            .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")")
-//            .append("g")
-//            .attr("id", "counties");
+
+var tooltip = d3.select("body")
+    .append("div")
+    .style("position", "absolute")
+    .style("z-index", "10")
+    .style("visibility", "hidden");
 
 
 
@@ -41,6 +97,7 @@ function ready(error,data, file_states, players){
   var counties = topojson.feature(data,data.objects.counties).features;
 
   var states = topojson.feature(file_states, file_states.objects.states).features;
+  console.log(counties);
 
 
  g.append('g')
@@ -49,24 +106,51 @@ function ready(error,data, file_states, players){
   .enter().append("path")
   .attr("class", "county")
   .attr("d", path)
+  // .append("text")
+  // .text(function(d){
+  //   return d.name;
+  // })
   .on('mouseover', function(d){
-    d3.select(this).classed("selected", true)
+    d3.select(this).classed("selected", true);
+    tooltip.style("visibility", "visible");
 
+  })
+  .on('mousemove', function(d){
+
+    tooltip.style("top",
+    (d3.event.pageY-10)+"px").style("left",(d3.event.pageX+10)+"px").text(d.properties.NAME + ' ' + mapCountyToState(d.properties.STATEFP));
   })
   .on('mouseout', function(d){
-    d3.select(this).classed("selected", false)
+    d3.select(this).classed("selected", false);
+      tooltip.style("visibility", "hidden");
 
   })
+
   .on('click',clicked);
 
 
 
 
-  // svg.selectAll(".state")
-  // .data(states)
-  // .enter().append("path")
-  // .attr("class","state")
-  // .attr("d",path)
+  g.selectAll(".state")
+  .data(states)
+  .enter().append("path")
+  .attr("class","state")
+  .attr("d",path)
+  .on('mouseover', function(s){
+    d3.select(this).classed("selected", true);
+    tooltip.style("visibility", "visible");
+
+  })
+  .on('mousemove', function(s){
+
+    tooltip.style("top",
+    (d3.event.pageY-10)+"px").style("left",(d3.event.pageX+10)+"px").text(s.properties.NAME);
+  })
+  .on('mouseout', function(s){
+    d3.select(this).classed("selected", false);
+      tooltip.style("visibility", "hidden");
+
+  })
 
 
   g.selectAll(".city-circle")
@@ -119,4 +203,9 @@ function clicked(d) {
       .duration(750)
       .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")scale(" + k + ")translate(" + -x + "," + -y + ")")
       .style("stroke-width", 1.5 / k + "px");
+}
+
+function mapCountyToState(state_id){
+  return state_Hash[state_id];
+
 }
