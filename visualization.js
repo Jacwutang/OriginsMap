@@ -55,7 +55,7 @@ function ready(error,data, file_states, players){
   svg.selectAll(".city-circle")
      .data(players)
      .enter().append("circle")
-     .attr("r",1)
+     .attr("r",2)
      .attr("cx",function(player){
        var coords = projection([player.Longitude, player.Latitude]);
 
@@ -74,6 +74,8 @@ function ready(error,data, file_states, players){
          return coords[1];
        }
      })
+     .attr("opacity", 0.5)
+
 
 
 
