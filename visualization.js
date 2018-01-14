@@ -63,8 +63,9 @@ var svg = d3.select("#map")
 
 var g = svg.append("g")
 
-var tooltip = d3.select("body")
+var tooltip = d3.select("#information")
     .append("div")
+    .attr("background", "red")
     .style("position", "absolute")
     .style("z-index", "10")
     .style("visibility", "hidden");
@@ -110,8 +111,10 @@ function ready(error,data, file_states, players){
 
   })
   .on('mousemove', function(d){
-    tooltip.style("top",
-    (d3.event.pageY-10)+"px").style("left",(d3.event.pageX+10)+"px").text(d.properties.NAME + ' ' + mapCountyToState(d.properties.STATEFP));
+    // tooltip.style("top",
+    // (d3.event.pageY-10)+"px").style("left",(d3.event.pageX+10)+"px").text(d.properties.NAME + ' ' +
+    tooltip.text(d.properties.NAME);
+    // mapCountyToState(d.properties.STATEFP));
   })
   .on('mouseout', function(d){
     d3.select(this).classed("selected", false);
@@ -143,42 +146,42 @@ function ready(error,data, file_states, players){
   })
 
 
-  g.selectAll(".city-circle")
-     .data(players)
-     .enter().append("circle")
-     .attr("r",2)
-     .attr("cx",function(player){
-       var coords = projection([player.Longitude, player.Latitude]);
-
-       if(coords === undefined || coords === null){
-         return 0;
-       } else{
-         return coords[0];
-       }
-
-     })
-     .attr("cy", function(player){
-       var coords = projection([player.Longitude,player.Latitude]);
-       if(coords === undefined || coords === null){
-         return 0;
-       } else{
-         return coords[1];
-       }
-     })
-     .attr("opacity", 0.5)
-     .on('mouseover', function(c){
-        tooltip.style("visibility", "visible");
-      })
-     .on('mousemove', function(c){
-       console.log(c);
-       tooltip.style("top",
-       (d3.event.pageY-10)+"px").style("left",(d3.event.pageX+10)+"px").text(c.name);
-     })
-     .on('mouseout', function(c){
-
-         tooltip.style("visibility", "hidden");
-
-     })
+  // g.selectAll(".city-circle")
+  //    .data(players)
+  //    .enter().append("circle")
+  //    .attr("r",2)
+  //    .attr("cx",function(player){
+  //      var coords = projection([player.Longitude, player.Latitude]);
+  //
+  //      if(coords === undefined || coords === null){
+  //        return 0;
+  //      } else{
+  //        return coords[0];
+  //      }
+  //
+  //    })
+  //    .attr("cy", function(player){
+  //      var coords = projection([player.Longitude,player.Latitude]);
+  //      if(coords === undefined || coords === null){
+  //        return 0;
+  //      } else{
+  //        return coords[1];
+  //      }
+  //    })
+  //    .attr("opacity", 0.5)
+  //    .on('mouseover', function(c){
+  //       tooltip.style("visibility", "visible");
+  //     })
+  //    .on('mousemove', function(c){
+  //      console.log(c);
+  //      tooltip.style("top",
+  //      (d3.event.pageY-10)+"px").style("left",(d3.event.pageX+10)+"px").text(c.name);
+  //    })
+  //    .on('mouseout', function(c){
+  //
+  //        tooltip.style("visibility", "hidden");
+  //
+  //    })
 }
 // ------------------------------------------------------------------
 function clicked(d) {
