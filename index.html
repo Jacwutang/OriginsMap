@@ -42,6 +42,7 @@
       position: relative;
       display: flex;
       flex-direction: column;
+      justify-content: space-around;
       border: 3px solid #33658A;
       padding: 10px 10px;
       border-radius: 10px;
@@ -78,6 +79,10 @@
 
     #prompt{
       font-weight: lighter;
+      padding-left: 12px;
+    }
+
+    #about{
       padding-left: 12px;
     }
 
@@ -135,6 +140,11 @@
     <div id="information">
 
     </div>
+
+    <p id="about">
+      Using d3.js and census data, this choropleth map shows the estimated percent of people of all ages in poverty. Use the dropdown above to toggle through years to see changing demographics through time. This project examines counties with high rates of poverty. Does the percentage of people living in poverty increase over time in these counties?
+    </p>
+
     </div>
 
   </div>
