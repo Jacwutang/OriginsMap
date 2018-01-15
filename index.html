@@ -37,12 +37,42 @@
       justify-content: space-around;
     }
 
-    #information{
+    #content{
       background: yellow;
       position: relative;
       display: flex;
       flex-direction: column;
-      
+      border: 3px solid #33658A;
+      padding: 10px 10px;
+      border-radius: 10px;
+      width: 25%;
+
+    }
+
+    #information{
+
+    }
+
+    #links{
+      display: flex;
+      flex-direction: row;
+      justify-content: space-around;
+      text-align: left;
+    }
+
+    #left-links{
+      display: flex;
+      flex-direction: row;
+      justify-content: flex-start;
+    }
+
+    .icon{
+      height: 50px;
+      width: 50px;
+    }
+
+    a{
+      text-decoration: none;
     }
 
   </style>
@@ -53,9 +83,41 @@
 </head>
 <body>
   <div class="wrapper">
-  <div id="map"> </div>
-  <div id="information"> HERE Expands as needed </div>
+
+    <div id="map"></div>
+
+    <div id="content">
+      <div id="links">
+        <div id="left-links">
+          Select Decade
+          <select id="dropdown">
+            <option value="1900"> 1900 </option>
+            <option value="1910"> 1910 </option>
+            <option value="1920"> 1920 </option>
+            <option value="1930"> 1930 </option>
+            <option value="1940"> 1940 </option>
+            <option value="1950"> 1950 </option>
+            <option value="1960"> 1960 </option>
+            <option value="1970"> 1970 </option>
+            <option value="1980"> 1980 </option>
+            <option value="1990"> 1990 </option>
+            <option value="2000"> 2000 </option>
+          </select>
+        </div>
+        <div id="right-links">
+          <a href="https://github.com/Jacwutang">
+            <img class="icon" src="https://image.flaticon.com/icons/svg/25/25231.svg">
+          </a>
+          <a href="https://www.linkedin.com/in/jacwutang/">
+            <img class="icon" src="https://image.flaticon.com/icons/svg/61/61109.svg">
+          </a>
+        </div>
+      </div>
+    <div id="information"></div>
+    </div>
+
   </div>
+
   <script>document.write('<script src="http://' + (location.host || 'localhost').split(':')[0] + ':35729/livereload.js?snipver=1"></' + 'script>')</script>
 
   <script src="https://d3js.org/d3.v4.min.js" charset="utf-8"></script>

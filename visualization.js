@@ -65,7 +65,8 @@ var g = svg.append("g")
 
 var tooltip = d3.select("#information")
     .append("div")
-    .attr("background", "red")
+    .style("font-weight", "bold")
+    .style("padding-left", "10px")
     .style("position", "absolute")
     .style("z-index", "10")
     .style("visibility", "hidden");
@@ -113,8 +114,10 @@ function ready(error,data, file_states, players){
   .on('mousemove', function(d){
     // tooltip.style("top",
     // (d3.event.pageY-10)+"px").style("left",(d3.event.pageX+10)+"px").text(d.properties.NAME + ' ' +
-    tooltip.text(d.properties.NAME);
-    // mapCountyToState(d.properties.STATEFP));
+
+
+    tooltip.text(d.properties.NAME + ' ' + 'County' + ',' + ' ' + mapCountyToState(d.properties.STATEFP));
+
   })
   .on('mouseout', function(d){
     d3.select(this).classed("selected", false);
@@ -129,21 +132,21 @@ function ready(error,data, file_states, players){
   .enter().append("path")
   .attr("class","state")
   .attr("d",path)
-  .on('mouseover', function(s){
-    d3.select(this).classed("selected", true);
-    tooltip.style("visibility", "visible");
-
-  })
-  .on('mousemove', function(s){
-
-    tooltip.style("top",
-    (d3.event.pageY-10)+"px").style("left",(d3.event.pageX+10)+"px").text(s.properties.NAME);
-  })
-  .on('mouseout', function(s){
-    d3.select(this).classed("selected", false);
-      tooltip.style("visibility", "hidden");
-
-  })
+  // .on('mouseover', function(s){
+  //   d3.select(this).classed("selected", true);
+  //   tooltip.style("visibility", "visible");
+  //
+  // })
+  // .on('mousemove', function(s){
+  //   tooltip.text(s.properties.NAME);
+  //   // tooltip.style("top",
+  //   // (d3.event.pageY-10)+"px").style("left",(d3.event.pageX+10)+"px").text(s.properties.NAME);
+  // })
+  // .on('mouseout', function(s){
+  //   d3.select(this).classed("selected", false);
+  //     tooltip.style("visibility", "hidden");
+  //
+  // })
 
 
   // g.selectAll(".city-circle")
