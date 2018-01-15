@@ -197,6 +197,7 @@
       "56": "Wyoming"
       }
 
+
     var width = 1500;
     var height = 975;
 
@@ -390,9 +391,6 @@
               .attr("r",.9)
               .attr("cx", function(player){
 
-                // console.log(player.name, player.Longitude,player.Latitude);
-                //  console.log(player.Longitude);
-                //  console.log(player.Latitude);
                   var coords = projection([player.Longitude,player.Latitude]);
                   //-98.614928
                   //27.899181
@@ -405,11 +403,7 @@
               })
               .attr("cy", function(player){
 
-                // console.log("HERE");
-                // console.log(player.name, "HERE");
-                // console.log(player.Longitude);
-                // console.log(player.Latitude);
-                var coords = projection([player.Longitude,player.Latitude]);
+              var coords = projection([player.Longitude,player.Latitude]);
 
                 if(coords === undefined || coords === null){
                   return 0;

@@ -52,6 +52,7 @@ var state_Hash = {
    "56": "Wyoming"
 }
 
+
 var width = 1000;
 var height = 750;
 var svg = d3.select("#map")
@@ -68,7 +69,6 @@ var tooltip = d3.select("#information")
     .style("position", "absolute")
     .style("z-index", "10")
     .style("visibility", "hidden");
-
 
 
 d3.queue()
@@ -91,11 +91,18 @@ var centered;
 //Convert from TopoJSON into something
 
 function ready(error,data, file_states, players){
+  // var player_dob = filterData(players);
 
   var counties = topojson.feature(data,data.objects.counties).features;
 
+  console.log(counties);
+
   var states = topojson.feature(file_states, file_states.objects.states).features;
-  // console.log(counties);
+
+  var select = document.getElementById("dropdown");
+  select.onchange = selectEventHandler;
+
+
 
 
  g.append('g')
@@ -107,7 +114,7 @@ function ready(error,data, file_states, players){
   .on('mouseover', function(d){
     d3.select(this).classed("selected", true);
     tooltip.style("visibility", "visible");
-
+    console.log(d)
   })
   .on('mousemove', function(d){
     // tooltip.style("top",
@@ -147,42 +154,44 @@ function ready(error,data, file_states, players){
   // })
 
 
-  // g.selectAll(".city-circle")
-  //    .data(players)
-  //    .enter().append("circle")
-  //    .attr("r",2)
-  //    .attr("cx",function(player){
-  //      var coords = projection([player.Longitude, player.Latitude]);
-  //
-  //      if(coords === undefined || coords === null){
-  //        return 0;
-  //      } else{
-  //        return coords[0];
-  //      }
-  //
-  //    })
-  //    .attr("cy", function(player){
-  //      var coords = projection([player.Longitude,player.Latitude]);
-  //      if(coords === undefined || coords === null){
-  //        return 0;
-  //      } else{
-  //        return coords[1];
-  //      }
-  //    })
-  //    .attr("opacity", 0.5)
-  //    .on('mouseover', function(c){
-  //       tooltip.style("visibility", "visible");
-  //     })
-  //    .on('mousemove', function(c){
-  //      console.log(c);
-  //      tooltip.style("top",
-  //      (d3.event.pageY-10)+"px").style("left",(d3.event.pageX+10)+"px").text(c.name);
-  //    })
-  //    .on('mouseout', function(c){
-  //
-  //        tooltip.style("visibility", "hidden");
-  //
-  //    })
+  g.selectAll(".city-circle")
+     .data(players)
+     .enter().append("circle")
+     .attr("class","city-circle")
+     .attr("r",2)
+     .attr("cx",function(player){
+       var coords = projection([player.Longitude, player.Latitude]);
+
+       if(coords === undefined || coords === null){
+         return 0;
+       } else{
+         return coords[0];
+       }
+
+     })
+     .attr("cy", function(player){
+       var coords = projection([player.Longitude,player.Latitude]);
+       if(coords === undefined || coords === null){
+         return 0;
+       } else{
+         return coords[1];
+       }
+     })
+     .attr("opacity", 0.5)
+     .on('mouseover', function(c){
+        tooltip.style("visibility", "visible");
+      })
+     .on('mousemove', function(c){
+       console.log(c);
+       tooltip.text(c.name + ',' + ' College: ' + c.college);
+       // tooltip.style("top",
+       // (d3.event.pageY-10)+"px").style("left",(d3.event.pageX+10)+"px").text(c.name);
+     })
+     .on('mouseout', function(c){
+
+         tooltip.style("visibility", "hidden");
+
+     })
 }
 // ------------------------------------------------------------------
 function clicked(d) {
@@ -214,5 +223,58 @@ function clicked(d) {
 
 function mapCountyToState(state_id){
   return state_Hash[state_id];
+
+}
+
+
+function filterData(data){
+  var res = [];
+
+  data.forEach( (d) => {
+    d.birth_date = parseInt("19" + d.birth_date.slice(-2) )
+    res.push(d);
+
+  })
+
+  return res;
+
+};
+
+function selectEventHandler(event){
+
+  console.log("HERE");
+
+  d3.selectAll(".city-circle").remove();
+
+
+  // console.log(svg.selectAll(".city-circle"));
+
+  //
+  // d3.selectAll(".city-circle")
+  //   .filter(function(d){
+  //     return d.birth_date < parseInt(select.value);
+  //   })
+  //   .enter().append("circle")
+  //   .attr("r",10)
+  //   .attr("cx",function(player){
+  //     var coords = projection([player.Longitude, player.Latitude]);
+  //
+  //     if(coords === undefined || coords === null){
+  //       return 0;
+  //     } else{
+  //       return coords[0];
+  //     }
+  //
+  //   })
+  //   .attr("cy", function(player){
+  //     var coords = projection([player.Longitude,player.Latitude]);
+  //     if(coords === undefined || coords === null){
+  //       return 0;
+  //     } else{
+  //       return coords[1];
+  //     }
+  //   })
+  //   .attr("opacity", 0.5)
+
 
 }
