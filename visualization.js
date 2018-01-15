@@ -111,8 +111,7 @@ function ready(error,data, file_states, players){
       }))
       .enter().append("circle")
       .attr("class","city-circle")
-      .attr("fill", "red")
-      .attr("r",10)
+      .attr("r",2)
       .attr("cx",function(player){
         var coords = projection([player.Longitude, player.Latitude]);
 
@@ -132,6 +131,20 @@ function ready(error,data, file_states, players){
         }
       })
       .attr("opacity", 0.5)
+      .on('mouseover', function(c){
+         tooltip.style("visibility", "visible");
+       })
+      .on('mousemove', function(c){
+        console.log(c);
+        tooltip.text(c.name + ',' + ' College: ' + c.college);
+        // tooltip.style("top",
+        // (d3.event.pageY-10)+"px").style("left",(d3.event.pageX+10)+"px").text(c.name);
+      })
+      .on('mouseout', function(c){
+
+          tooltip.style("visibility", "hidden");
+
+      })
 
 
 
@@ -231,7 +244,7 @@ function ready(error,data, file_states, players){
 // ------------------------------------------------------------------
 function clicked(d) {
 
-  console.log(clicked);
+
   var x, y, k;
 
   if (d && centered !== d) {
@@ -275,41 +288,41 @@ function filterData(data){
 
 };
 
-function selectEventHandler(event,players){
-
-  console.log("HERE");
-
-  d3.selectAll(".city-circle").remove();
-
-
-  d3.selectAll(".city-circle")
-    .data(players,function(player){
-      console.log(event.target.value);
-      return player.birth_date < parseInt(event.target.value);
-    })
-    .enter().append("circle")
-    .attr("class","city-circle")
-    .attr("fill", "red")
-    .attr("r",10)
-    .attr("cx",function(player){
-      var coords = projection([player.Longitude, player.Latitude]);
-
-      if(coords === undefined || coords === null){
-        return 0;
-      } else{
-        return coords[0];
-      }
-
-    })
-    .attr("cy", function(player){
-      var coords = projection([player.Longitude,player.Latitude]);
-      if(coords === undefined || coords === null){
-        return 0;
-      } else{
-        return coords[1];
-      }
-    })
-    .attr("opacity", 0.5)
-
-
-}
+// function selectEventHandler(event,players){
+//
+//
+//
+//   d3.selectAll(".city-circle").remove();
+//
+//
+//   d3.selectAll(".city-circle")
+//     .data(players,function(player){
+//       console.log(event.target.value);
+//       return player.birth_date < parseInt(event.target.value);
+//     })
+//     .enter().append("circle")
+//     .attr("class","city-circle")
+//     .attr("fill", "red")
+//     .attr("r",10)
+//     .attr("cx",function(player){
+//       var coords = projection([player.Longitude, player.Latitude]);
+//
+//       if(coords === undefined || coords === null){
+//         return 0;
+//       } else{
+//         return coords[0];
+//       }
+//
+//     })
+//     .attr("cy", function(player){
+//       var coords = projection([player.Longitude,player.Latitude]);
+//       if(coords === undefined || coords === null){
+//         return 0;
+//       } else{
+//         return coords[1];
+//       }
+//     })
+//     .attr("opacity", 0.5)
+//
+//
+// }
