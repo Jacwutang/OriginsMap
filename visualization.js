@@ -92,7 +92,7 @@ var centered;
 
 function ready(error,data, file_states, players){
   // var player_dob = filterData(players);
-
+  filterData(players);
   var counties = topojson.feature(data,data.objects.counties).features;
 
   console.log(counties);
@@ -100,7 +100,42 @@ function ready(error,data, file_states, players){
   var states = topojson.feature(file_states, file_states.objects.states).features;
 
   var select = document.getElementById("dropdown");
-  select.onchange = selectEventHandler;
+  select.onchange = function(event){
+    d3.selectAll(".city-circle").remove();
+
+    g.selectAll(".city-circle")
+      .data(players.filter(function(player){
+        // console.log(player.birth_date);
+        // console.log(event.target.value);
+        return player.birth_date < parseInt(event.target.value);
+      }))
+      .enter().append("circle")
+      .attr("class","city-circle")
+      .attr("fill", "red")
+      .attr("r",10)
+      .attr("cx",function(player){
+        var coords = projection([player.Longitude, player.Latitude]);
+
+        if(coords === undefined || coords === null){
+          return 0;
+        } else{
+          return coords[0];
+        }
+
+      })
+      .attr("cy", function(player){
+        var coords = projection([player.Longitude,player.Latitude]);
+        if(coords === undefined || coords === null){
+          return 0;
+        } else{
+          return coords[1];
+        }
+      })
+      .attr("opacity", 0.5)
+
+
+
+  }
 
 
 
@@ -240,41 +275,41 @@ function filterData(data){
 
 };
 
-function selectEventHandler(event){
+function selectEventHandler(event,players){
 
   console.log("HERE");
 
   d3.selectAll(".city-circle").remove();
 
 
-  // console.log(svg.selectAll(".city-circle"));
+  d3.selectAll(".city-circle")
+    .data(players,function(player){
+      console.log(event.target.value);
+      return player.birth_date < parseInt(event.target.value);
+    })
+    .enter().append("circle")
+    .attr("class","city-circle")
+    .attr("fill", "red")
+    .attr("r",10)
+    .attr("cx",function(player){
+      var coords = projection([player.Longitude, player.Latitude]);
 
-  //
-  // d3.selectAll(".city-circle")
-  //   .filter(function(d){
-  //     return d.birth_date < parseInt(select.value);
-  //   })
-  //   .enter().append("circle")
-  //   .attr("r",10)
-  //   .attr("cx",function(player){
-  //     var coords = projection([player.Longitude, player.Latitude]);
-  //
-  //     if(coords === undefined || coords === null){
-  //       return 0;
-  //     } else{
-  //       return coords[0];
-  //     }
-  //
-  //   })
-  //   .attr("cy", function(player){
-  //     var coords = projection([player.Longitude,player.Latitude]);
-  //     if(coords === undefined || coords === null){
-  //       return 0;
-  //     } else{
-  //       return coords[1];
-  //     }
-  //   })
-  //   .attr("opacity", 0.5)
+      if(coords === undefined || coords === null){
+        return 0;
+      } else{
+        return coords[0];
+      }
+
+    })
+    .attr("cy", function(player){
+      var coords = projection([player.Longitude,player.Latitude]);
+      if(coords === undefined || coords === null){
+        return 0;
+      } else{
+        return coords[1];
+      }
+    })
+    .attr("opacity", 0.5)
 
 
 }
