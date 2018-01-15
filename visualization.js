@@ -65,8 +65,6 @@ var g = svg.append("g")
 
 var tooltip = d3.select("#information")
     .append("div")
-    .style("font-weight", "bold")
-    .style("padding-left", "10px")
     .style("position", "absolute")
     .style("z-index", "10")
     .style("visibility", "hidden");
