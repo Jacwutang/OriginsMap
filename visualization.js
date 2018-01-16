@@ -59,7 +59,6 @@ var svg = d3.select("#map")
           .append("svg")
           .attr("height",height)
           .attr("width", width)
-          // .append("g")
           .attr("transform", "translate(30,30)")
 
 var g = svg.append("g")
@@ -91,11 +90,11 @@ var centered;
 //Convert from TopoJSON into something
 
 function ready(error,data, file_states, players){
-  // var player_dob = filterData(players);
+
   filterData(players);
   var counties = topojson.feature(data,data.objects.counties).features;
 
-  console.log(counties);
+
 
   var states = topojson.feature(file_states, file_states.objects.states).features;
 
@@ -105,8 +104,7 @@ function ready(error,data, file_states, players){
 
     g.selectAll(".city-circle")
       .data(players.filter(function(player){
-        // console.log(player.birth_date);
-        // console.log(event.target.value);
+
         return player.birth_date < parseInt(event.target.value);
       }))
       .enter().append("circle")
@@ -135,7 +133,7 @@ function ready(error,data, file_states, players){
          tooltip.style("visibility", "visible");
        })
       .on('mousemove', function(c){
-        console.log(c);
+
         tooltip.text(c.name + ',' + ' College: ' + c.college);
         // tooltip.style("top",
         // (d3.event.pageY-10)+"px").style("left",(d3.event.pageX+10)+"px").text(c.name);
@@ -162,7 +160,7 @@ function ready(error,data, file_states, players){
   .on('mouseover', function(d){
     d3.select(this).classed("selected", true);
     tooltip.style("visibility", "visible");
-    console.log(d)
+
   })
   .on('mousemove', function(d){
     // tooltip.style("top",
@@ -185,21 +183,7 @@ function ready(error,data, file_states, players){
   .enter().append("path")
   .attr("class","state")
   .attr("d",path)
-  // .on('mouseover', function(s){
-  //   d3.select(this).classed("selected", true);
-  //   tooltip.style("visibility", "visible");
-  //
-  // })
-  // .on('mousemove', function(s){
-  //   tooltip.text(s.properties.NAME);
-  //   // tooltip.style("top",
-  //   // (d3.event.pageY-10)+"px").style("left",(d3.event.pageX+10)+"px").text(s.properties.NAME);
-  // })
-  // .on('mouseout', function(s){
-  //   d3.select(this).classed("selected", false);
-  //     tooltip.style("visibility", "hidden");
-  //
-  // })
+
 
 
   g.selectAll(".city-circle")
@@ -230,7 +214,7 @@ function ready(error,data, file_states, players){
         tooltip.style("visibility", "visible");
       })
      .on('mousemove', function(c){
-       console.log(c);
+
        tooltip.text(c.name + ',' + ' College: ' + c.college);
        // tooltip.style("top",
        // (d3.event.pageY-10)+"px").style("left",(d3.event.pageX+10)+"px").text(c.name);
@@ -287,42 +271,3 @@ function filterData(data){
   return res;
 
 };
-
-// function selectEventHandler(event,players){
-//
-//
-//
-//   d3.selectAll(".city-circle").remove();
-//
-//
-//   d3.selectAll(".city-circle")
-//     .data(players,function(player){
-//       console.log(event.target.value);
-//       return player.birth_date < parseInt(event.target.value);
-//     })
-//     .enter().append("circle")
-//     .attr("class","city-circle")
-//     .attr("fill", "red")
-//     .attr("r",10)
-//     .attr("cx",function(player){
-//       var coords = projection([player.Longitude, player.Latitude]);
-//
-//       if(coords === undefined || coords === null){
-//         return 0;
-//       } else{
-//         return coords[0];
-//       }
-//
-//     })
-//     .attr("cy", function(player){
-//       var coords = projection([player.Longitude,player.Latitude]);
-//       if(coords === undefined || coords === null){
-//         return 0;
-//       } else{
-//         return coords[1];
-//       }
-//     })
-//     .attr("opacity", 0.5)
-//
-//
-// }
