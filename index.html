@@ -47,6 +47,8 @@
       padding: 10px 10px;
       border-radius: 10px;
       width: 25%;
+      margin-top: 5%;
+      height: 50%;
     }
 
     #information{
@@ -91,6 +93,14 @@
       width: 50px;
     }
 
+    #nav-bar{
+      background: gray;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      text-align: center;
+    }
+
     a{
       text-decoration: none;
     }
@@ -102,6 +112,11 @@
 
 </head>
 <body>
+  <div id="nav-bar">
+    <h2>Exploring Hotspots of Football Talent</h2>
+    <h3> Scout the next generation of stars using records of 20,000+ former and present NFL players  </h3>
+  </div>
+
   <div class="wrapper">
 
     <div id="map"></div>
@@ -142,11 +157,14 @@
 
     </div>
 
+    <br>
+
     <p id="about">
       Using d3.js and athlete data, This map shows the birthplaces of over 22,000 both former and present  football players in the NFL.
       <br>
-
+      <br>
       Use the dropdown above to toggle through years to see regions through time. Are certain counties most likely to contain the next generation of talent?
+      <br>
       <br>
       What about your hometown?
     </p>
@@ -155,7 +173,7 @@
 
   </div>
 
-  <script>document.write('<script src="http://' + (location.host || 'localhost').split(':')[0] + ':35729/livereload.js?snipver=1"></' + 'script>')</script>
+  <!-- <script>document.write('<script src="http://' + (location.host || 'localhost').split(':')[0] + ':35729/livereload.js?snipver=1"></' + 'script>')</script> -->
 
   <script src="https://d3js.org/d3.v4.min.js" charset="utf-8"></script>
 
