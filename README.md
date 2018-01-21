@@ -6,7 +6,7 @@ The goal of this project is to track the origins of every NFL football player fr
 
 
 
-**# Demo **
+**# Demo**
 
 ![](http://g.recordit.co/wWC0w8fCJq.gif)
 
